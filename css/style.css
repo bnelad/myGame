@@ -18,7 +18,6 @@ body {
     background-color: rgb(167, 20, 20);
 }
 
-
 .restart {
     background-color: lightseagreen;
     position: absolute;
@@ -28,7 +27,6 @@ body {
     width: 60px;
     display: none;
 }
-
 
 .over {
     background-color: rgb(115, 178, 32);
@@ -41,7 +39,7 @@ body {
 }
 
 .won {
-    background-color: rgb(41, 103, 236);
+    background-color: rgb(126, 147, 190);
     position: absolute;
     top: 200px;
     right: 200px;

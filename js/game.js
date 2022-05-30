@@ -14,7 +14,6 @@ var gIntervalId
 var maxShown = gSize * gSize - gMines
 
 
-
 function chooseDifficulty(level) {
     gSize = level
     initGame()
@@ -124,8 +123,6 @@ function buildBoard() {
 }
 
 
-
-
 // Render the board to an HTML table
 function renderBoard(board) {
 
@@ -157,11 +154,7 @@ function cellClicked(elCell, i, j) {
 		startTimer()
 		gIsBeginning = false
 	}
-	console.log('cell clicked:  ')
-	console.log(i)
-	console.log(j)
 	if (gGameIsON === false) {
-		clearInterval(gIntervalId)
 		return
 	}
 
@@ -176,6 +169,7 @@ function cellClicked(elCell, i, j) {
 		gGameIsON = false
 		var elOver = document.querySelector('.over')
 		elOver.style.display = 'block'
+		clearInterval(gIntervalId)
 	} else {
 		if (gBoard[i][j].minesAroundCount > 0) {
 			elCell.innerText = gBoard[i][j].minesAroundCount 
@@ -187,28 +181,39 @@ function cellClicked(elCell, i, j) {
 		console.log(gShownCount)
 
 		elCell.classList.add('cover')
-		if (gShownCount == maxShown) {
+		if ((gShownCount == maxShown) && (gMines == 0)) {
 			gGameIsON = false
 			console.log('You Won')
 			var elWon = document.querySelector('.won')
 			elWon.style.display = 'block'
+			clearInterval(gIntervalId)
 		}
 		gBoard[i][j].isShown = true
 	}
 }
 
 function cellMarked(elCell, i, j) {
-	console.log('shabat shalom!!!')
+	if (gGameIsON === false) {
+			return
+	}
 	if (gBoard[i][j].isMarked) {
 		gBoard[i][j].isMarked = false
 		elCell.innerText = ''
+		gMines ++
 	} else {
-		console.log('111111')
+		
 		console.log(gBoard[i][j].isShown)
 		if (gBoard[i][j].isShown == false) {
-			console.log('2222')
 			gBoard[i][j].isMarked = true
 			elCell.innerText = '🚩'
+			gMines --
+			if ((gShownCount == maxShown) && (gMines == 0)) {
+				gGameIsON = false
+				console.log('You Won')
+				var elWon = document.querySelector('.won')
+				elWon.style.display = 'block'
+				clearInterval(gIntervalId)
+			}
 		}
 	}
 }
